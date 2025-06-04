@@ -1,14 +1,8 @@
 {
-  "name": "default",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "remoteUser": "root",
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "zsh"
-  },
+  "name": "devcontainer",
+  "image": "docker pull ghcr.io/iypetrov/devcontainer:0.2.0",
+  "postCreateCommand": "echo 'Hello, World!'",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-  ],
-  "postCreateCommand": "echo 'Hello, World!'"
+  ]
 }
