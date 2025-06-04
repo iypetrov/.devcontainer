@@ -2,26 +2,26 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Dependencies
-RUN apt update && apt install -y
-RUN curl 
-RUN wget 
-RUN git 
-RUN vim 
-RUN tmux 
-RUN zsh 
-RUN htop 
-RUN fzf 
-RUN unzip 
-RUN build-essential 
-RUN ripgrep 
-RUN ca-certificates 
-RUN openssh-client 
-RUN sudo 
-RUN make 
-RUN stow
-RUN software-properties-common
-RUN lazygit
-RUN ansible
+RUN apt update
+RUN apt install -y curl 
+RUN apt install -y wget 
+RUN apt install -y git 
+RUN apt install -y vim 
+RUN apt install -y tmux 
+RUN apt install -y zsh 
+RUN apt install -y htop 
+RUN apt install -y fzf 
+RUN apt install -y unzip 
+RUN apt install -y build-essential 
+RUN apt install -y ripgrep 
+RUN apt install -y ca-certificates 
+RUN apt install -y openssh-client 
+RUN apt install -y sudo 
+RUN apt install -y make 
+RUN apt install -y stow
+RUN apt install -y software-properties-common
+RUN apt install -y lazygit
+RUN apt install -y ansible
 RUN rm -rf /var/lib/apt/lists/*
 
 # Repositories
