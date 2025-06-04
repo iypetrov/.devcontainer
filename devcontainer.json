@@ -1,6 +1,6 @@
 {
   "name": "devcontainer",
-  "image": "iypetrov/devcontainer:0.3.0",
+  "image": "iypetrov/devcontainer:0.4.0",
   "postCreateCommand": "tmux",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
