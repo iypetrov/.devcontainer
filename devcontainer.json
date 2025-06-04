@@ -1,0 +1,14 @@
+{
+  "name": "default",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "root",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "zsh"
+  },
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+  "postCreateCommand": "echo 'Hello, World!'"
+}
