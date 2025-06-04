@@ -1,6 +1,6 @@
 {
   "name": "devcontainer",
-  "image": "iypetrov/devcontainer:0.5.0",
+  "image": "iypetrov/devcontainer:0.6.0",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
   ]
