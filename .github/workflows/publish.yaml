@@ -40,6 +40,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: .devcontainer/Dockerfile
+          file: Dockerfile
           push: true
           tags: ${{ env.TAG }}
