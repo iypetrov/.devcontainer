@@ -1,7 +1,7 @@
 {
   "name": "devcontainer",
-  "image": "docker pull ghcr.io/iypetrov/devcontainer:0.2.0",
-  "postCreateCommand": "echo 'Hello, World!'",
+  "image": "iypetrov/devcontainer:0.2.0",
+  "postCreateCommand": "tmux",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
   ]
