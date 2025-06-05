@@ -1,6 +1,10 @@
 FROM ubuntu:25.10
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Secrets
+ARG ANSIBLE_VAULT_PASSWORD
+RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
+
 # Dependencies
 RUN apt update
 RUN apt install -y curl 
@@ -28,18 +32,24 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /projects/common
 RUN mkdir -p /projects/personal
 RUN mkdir -p /projects/work
+
+## common
 RUN git clone https://github.com/iypetrov/vault.git /projects/common/vault
-RUN ln -sfn /projects/common/vault /projects/common
-RUN ansible-vault decrypt --ask-vault-pass /projects/common/vault/ansible-vault-pass.txt
-RUN find /projects/common/vault/.ssh -type f -exec ansible-vault decrypt --vault-password-file /projects/common/vault/ansible-vault-pass.txt {} \;
-RUN find /projects/common/vault/auth_codes -type f -exec ansible-vault decrypt --vault-password-file /projects/common/vault/ansible-vault-pass.txt {} \;
+
+RUN find /projects/common/vault/.ssh -type f -exec ansible-vault decrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
+RUN find /projects/common/vault/.aws -type f -exec ansible-vault decrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN rm -rf /home/root/.ssh
 RUN ln -sfn /projects/common/vault/.ssh /home/root
-RUN ln -sfn /projects/common/vault/auth_codes /home/root
+RUN ln -sfn /projects/common/vault/.aws /home/root
+
 RUN git clone https://github.com/iypetrov/.dotfiles.git /projects/common/.dotfiles
 RUN cd /projects/common
 RUN stow --target=/home/root .dotfiles
 RUN cd /home/root
+
 RUN git clone git@github.com:iypetrov/books.git /projects/common/books
+
+# Teardown
+RUN rm /tmp/ansible-vault-pass.txt
 
 WORKDIR /root
