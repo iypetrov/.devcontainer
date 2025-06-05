@@ -28,6 +28,8 @@ jobs:
       - name: Build image
         run: |
           docker build \
+            --build-arg GH_USERNAME="${{ github.actor }}" \
+            --build-arg GH_PAT="${{ secrets.GH_PAT }}" \
             --build-arg ANSIBLE_VAULT_PASSWORD="${{ secrets.ANSIBLE_VAULT_PASSWORD }}" \
             -t iypetrov/devcontainer:${{ github.ref_name }} .
 
