@@ -33,7 +33,6 @@ RUN rm -rf /var/lib/apt/lists/*
 # User
 RUN useradd -m -s /bin/zsh ipetrov
 RUN usermod -aG sudo ipetrov
-USER ipetrov
 WORKDIR /home/ipetrov
 
 # Repositories
@@ -57,6 +56,7 @@ RUN cd /home/ipetrov
 # Teardown
 RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
-RUN rm -rf /tmp/ansible-vault-pass.txt
+RUN rm /tmp/ansible-vault-pass.txt
 
+USER ipetrov
 CMD ["/bin/zsh"]
