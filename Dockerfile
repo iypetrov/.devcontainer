@@ -30,6 +30,12 @@ RUN apt install -y lazygit
 RUN apt install -y ansible
 RUN rm -rf /var/lib/apt/lists/*
 
+# User
+RUN useradd -m -s /bin/zsh ipetrov
+RUN usermod -aG sudo ipetrov
+USER ipetrov
+WORKDIR /home/ipetrov
+
 # Repositories
 RUN mkdir -p /projects/common
 RUN mkdir -p /projects/personal
@@ -40,23 +46,16 @@ RUN git clone https://${GH_USERNAME}:${GH_PAT}@github.com/iypetrov/vault.git /pr
 
 RUN find /projects/common/vault/.ssh -type f -exec ansible-vault decrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN find /projects/common/vault/.aws -type f -exec ansible-vault decrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
-RUN rm -rf /root/.ssh
-RUN ln -sfn /projects/common/vault/.ssh /root
-RUN ln -sfn /projects/common/vault/.aws /root
+RUN ln -sfn /projects/common/vault/.ssh /home/ipetrov
+RUN ln -sfn /projects/common/vault/.aws /home/ipetrov
 
 RUN git clone https://${GH_USERNAME}:${GH_PAT}@github.com/iypetrov/.dotfiles.git /projects/common/.dotfiles
 RUN cd /projects/common
-RUN stow --target=/root .dotfiles
-RUN cd /root
+RUN stow --target=/home/ipetrov .dotfiles
+RUN cd /home/ipetrov
 
 RUN git clone git@github.com:iypetrov/books.git /projects/common/books
  
-# User
-RUN useradd -m -s /bin/zsh ipetrov
-RUN usermod -aG sudo ipetrov
-USER ipetrov
-WORKDIR /home/ipetrov
-
 # Teardown
 RUN find /projects/common/vault/.ssh -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN find /projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
