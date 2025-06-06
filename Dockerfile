@@ -27,7 +27,6 @@ ARG GH_PAT
 RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
 
 # Dependencies 2
-RUN apt update
 RUN apt install -y vim 
 RUN apt install -y tmux 
 RUN apt install -y fzf 
