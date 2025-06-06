@@ -33,6 +33,8 @@ RUN rm -rf /var/lib/apt/lists/*
 # User
 RUN useradd -m -s /bin/zsh ipetrov
 RUN usermod -aG sudo ipetrov
+RUN echo "ipetrov ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ipetrov && chmod 0440 /etc/sudoers.d/ipetrov
+
 WORKDIR /home/ipetrov
 
 # Repositories
