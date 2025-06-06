@@ -51,7 +51,7 @@ RUN ln -sfn /home/ipetrov/projects/common/vault/.aws /home/ipetrov
 
 RUN git clone https://${GH_USERNAME}:${GH_PAT}@github.com/iypetrov/.dotfiles.git /home/ipetrov/projects/common/.dotfiles
 RUN cd /home/ipetrov/projects/common
-RUN stow --target=/home/ipetrov .dotfiles
+RUN stow --dir=/home/ipetrov/projects/common --target=/home/ipetrov .dotfiles
 RUN cd /home/ipetrov
 
 RUN git clone git@github.com:iypetrov/books.git /home/ipetrov/projects/common/books
