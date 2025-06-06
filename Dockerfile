@@ -1,7 +1,7 @@
 FROM ubuntu:25.10
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Dependencies 1
+# Dependencies 
 RUN apt update
 RUN apt install -y curl 
 RUN apt install -y wget 
@@ -11,6 +11,16 @@ RUN apt install -y zsh
 RUN apt install -y stow
 RUN apt install -y ansible
 RUN apt install -y sudo 
+RUN apt install -y vim 
+RUN apt install -y tmux 
+RUN apt install -y fzf 
+RUN apt install -y build-essential 
+RUN apt install -y ripgrep 
+RUN apt install -y ca-certificates 
+RUN apt install -y openssh-client 
+RUN apt install -y make 
+RUN apt install -y software-properties-common
+RUN apt install -y lazygit
 RUN rm -rf /var/lib/apt/lists/*
 
 # User
@@ -25,19 +35,6 @@ ARG ANSIBLE_VAULT_PASSWORD
 ARG GH_USERNAME
 ARG GH_PAT
 RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
-
-# Dependencies 2
-RUN apt install -y vim 
-RUN apt install -y tmux 
-RUN apt install -y fzf 
-RUN apt install -y build-essential 
-RUN apt install -y ripgrep 
-RUN apt install -y ca-certificates 
-RUN apt install -y openssh-client 
-RUN apt install -y make 
-RUN apt install -y software-properties-common
-RUN apt install -y lazygit
-RUN rm -rf /var/lib/apt/lists/*
 
 # Repositories
 RUN mkdir -p /home/ipetrov/projects/common
