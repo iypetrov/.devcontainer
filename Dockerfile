@@ -21,6 +21,9 @@ RUN apt install -y openssh-client
 RUN apt install -y make 
 RUN apt install -y software-properties-common
 RUN apt install -y lazygit
+RUN apt install -y docker.io
+RUN dockerd &
+RUN dockerd --storage-driver=overlay2 &
 RUN rm -rf /var/lib/apt/lists/*
 
 # User
