@@ -54,8 +54,6 @@ RUN cd /home/ipetrov/projects/common
 RUN stow --dir=/home/ipetrov/projects/common --target=/home/ipetrov .dotfiles
 RUN cd /home/ipetrov
 
-RUN git clone git@github.com:iypetrov/books.git /home/ipetrov/projects/common/books
- 
 # Teardown
 RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
