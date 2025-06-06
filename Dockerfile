@@ -22,8 +22,6 @@ RUN apt install -y make
 RUN apt install -y software-properties-common
 RUN apt install -y lazygit
 RUN apt install -y docker.io
-RUN dockerd &
-RUN dockerd --storage-driver=overlay2 &
 RUN rm -rf /var/lib/apt/lists/*
 
 # User
@@ -62,4 +60,4 @@ RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault en
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN rm /tmp/ansible-vault-pass.txt
 
-CMD ["/bin/zsh"]
+CMD ["/bin/bash", "-c", "sudo dockerd --storage-driver=overlay2 & /bin/zsh"]
