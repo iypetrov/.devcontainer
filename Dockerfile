@@ -57,6 +57,6 @@ RUN cd /home/ipetrov
 # Teardown
 RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
-RUN rm /tmp/ansible-vault-pass.txt
+RUN rm -rf /tmp/ansible-vault-pass.txt
 
 CMD ["/bin/zsh"]
