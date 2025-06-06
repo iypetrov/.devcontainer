@@ -1,41 +1,44 @@
 FROM ubuntu:25.10
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Secrets
-ARG ANSIBLE_VAULT_PASSWORD
-ARG GH_USERNAME
-ARG GH_PAT
-RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
-
-# Dependencies
+# Dependencies 1
 RUN apt update
 RUN apt install -y curl 
 RUN apt install -y wget 
 RUN apt install -y git 
-RUN apt install -y vim 
-RUN apt install -y tmux 
-RUN apt install -y zsh 
-RUN apt install -y htop 
-RUN apt install -y fzf 
 RUN apt install -y unzip 
-RUN apt install -y build-essential 
-RUN apt install -y ripgrep 
-RUN apt install -y ca-certificates 
-RUN apt install -y openssh-client 
-RUN apt install -y sudo 
-RUN apt install -y make 
+RUN apt install -y zsh 
 RUN apt install -y stow
-RUN apt install -y software-properties-common
-RUN apt install -y lazygit
 RUN apt install -y ansible
+RUN apt install -y sudo 
 RUN rm -rf /var/lib/apt/lists/*
 
 # User
 RUN useradd -m -s /bin/zsh ipetrov
 RUN usermod -aG sudo ipetrov
 RUN echo "ipetrov ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ipetrov && chmod 0440 /etc/sudoers.d/ipetrov
-
+USER ipetrov
 WORKDIR /home/ipetrov
+
+# Secrets
+ARG ANSIBLE_VAULT_PASSWORD
+ARG GH_USERNAME
+ARG GH_PAT
+RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
+
+# Dependencies 2
+RUN apt update
+RUN apt install -y vim 
+RUN apt install -y tmux 
+RUN apt install -y fzf 
+RUN apt install -y build-essential 
+RUN apt install -y ripgrep 
+RUN apt install -y ca-certificates 
+RUN apt install -y openssh-client 
+RUN apt install -y make 
+RUN apt install -y software-properties-common
+RUN apt install -y lazygit
+RUN rm -rf /var/lib/apt/lists/*
 
 # Repositories
 RUN mkdir -p /home/ipetrov/projects/common
@@ -60,5 +63,4 @@ RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault en
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN rm /tmp/ansible-vault-pass.txt
 
-USER ipetrov
 CMD ["/bin/zsh"]
