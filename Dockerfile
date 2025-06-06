@@ -50,8 +50,16 @@ RUN stow --target=/root .dotfiles
 RUN cd /root
 
 RUN git clone git@github.com:iypetrov/books.git /projects/common/books
+ 
+# User
+RUN useradd -m -s /bin/zsh ipetrov
+RUN usermod -aG sudo ipetrov
+USER ipetrov
+WORKDIR /home/ipetrov
 
 # Teardown
+RUN find /projects/common/vault/.ssh -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
+RUN find /projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN rm /tmp/ansible-vault-pass.txt
 
-WORKDIR /root
+CMD ["/bin/zsh"]
