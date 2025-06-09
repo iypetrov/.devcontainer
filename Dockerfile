@@ -1,11 +1,10 @@
 FROM ubuntu:25.10
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Secrets
+# Args
 ARG ANSIBLE_VAULT_PASSWORD
 ARG GH_USERNAME
 ARG GH_PAT
-RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
 
 # Dependencies 
 RUN apt update
@@ -38,6 +37,9 @@ RUN usermod -aG docker ipetrov
 RUN newgrp docker
 USER ipetrov
 WORKDIR /home/ipetrov
+
+# Secrets
+RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
 
 # Repositories
 RUN mkdir -p /home/ipetrov/projects/common
