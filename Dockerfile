@@ -32,8 +32,9 @@ USER ipetrov
 WORKDIR /home/ipetrov
 
 # Docker
-RUN groupadd docker || true
+RUN groupadd docker
 RUN usermod -aG docker ipetrov
+RUN newgrp docker
 
 # Secrets
 ARG ANSIBLE_VAULT_PASSWORD
