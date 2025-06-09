@@ -65,4 +65,4 @@ RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault en
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN rm /tmp/ansible-vault-pass.txt
 
-CMD ["/bin/bash", "-c", "dockerd --storage-driver=vfs & /bin/zsh"]
+CMD ["/bin/bash", "-c", "sudo dockerd --storage-driver=vfs & /bin/zsh"]
