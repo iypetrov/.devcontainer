@@ -32,7 +32,6 @@ USER ipetrov
 WORKDIR /home/ipetrov
 
 # Docker
-RUN groupadd docker
 RUN usermod -aG docker ipetrov
 RUN newgrp docker
 
