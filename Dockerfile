@@ -31,6 +31,10 @@ RUN echo "ipetrov ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ipetrov && chmod 0440
 USER ipetrov
 WORKDIR /home/ipetrov
 
+# Docker
+RUN groupadd docker || true
+RUN usermod -aG docker ipetrov
+
 # Secrets
 ARG ANSIBLE_VAULT_PASSWORD
 ARG GH_USERNAME
@@ -60,4 +64,4 @@ RUN find /home/ipetrov/projects/common/vault/.ssh -type f -exec ansible-vault en
 RUN find /home/ipetrov/projects/common/vault/.aws -type f -exec ansible-vault encrypt --vault-password-file /tmp/ansible-vault-pass.txt {} \;
 RUN rm /tmp/ansible-vault-pass.txt
 
-CMD ["/bin/bash", "-c", "sudo dockerd --storage-driver=vfs & /bin/zsh"]
+CMD ["/bin/bash", "-c", "dockerd --host=unix:///var/run/docker.sock --storage-driver=vfs & /bin/zsh"]
