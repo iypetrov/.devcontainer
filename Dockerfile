@@ -1,6 +1,12 @@
 FROM ubuntu:25.10
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Secrets
+ARG ANSIBLE_VAULT_PASSWORD
+ARG GH_USERNAME
+ARG GH_PAT
+RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
+
 # Dependencies 
 RUN apt update
 RUN apt install -y curl 
@@ -24,22 +30,14 @@ RUN apt install -y lazygit
 RUN apt install -y docker.io
 RUN rm -rf /var/lib/apt/lists/*
 
-# User
+# User & Docker
 RUN useradd -m -s /bin/zsh ipetrov
 RUN usermod -aG sudo ipetrov
 RUN echo "ipetrov ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ipetrov && chmod 0440 /etc/sudoers.d/ipetrov
-USER ipetrov
-WORKDIR /home/ipetrov
-
-# Docker
 RUN usermod -aG docker ipetrov
 RUN newgrp docker
-
-# Secrets
-ARG ANSIBLE_VAULT_PASSWORD
-ARG GH_USERNAME
-ARG GH_PAT
-RUN echo "${ANSIBLE_VAULT_PASSWORD}" > /tmp/ansible-vault-pass.txt
+USER ipetrov
+WORKDIR /home/ipetrov
 
 # Repositories
 RUN mkdir -p /home/ipetrov/projects/common
