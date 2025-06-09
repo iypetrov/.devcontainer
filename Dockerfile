@@ -27,6 +27,7 @@ RUN apt install -y make
 RUN apt install -y software-properties-common
 RUN apt install -y lazygit
 RUN apt install -y docker.io
+RUN apt install -y silversearcher-ag
 RUN rm -rf /var/lib/apt/lists/*
 
 # User & Docker
