@@ -1,6 +1,0 @@
-[submodule ".dotfiles"]
-	path = .dotfiles
-	url = git@github.com:iypetrov/.dotfiles.git
-[submodule "vault"]
-	path = vault
-	url = git@github.com:iypetrov/vault.git
